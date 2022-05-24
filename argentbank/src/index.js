@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 
 import Homepage from "./pages/Homepage";
 import Signin from "./pages/Signin";
+import User from "./pages/User";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -19,6 +20,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/sign-in" element={<Signin />} />
+        <Route path="/user" element={<User />} />
       </Routes>
       <Footer />
     </Router>
