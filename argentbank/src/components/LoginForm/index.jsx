@@ -45,7 +45,8 @@ function LoginForm() {
 
       if (response.status === 200) {
         setSuccess("You have successfully logged in");
-        console.log(response);
+        const token = await response.json();
+        console.log(token);
       } else {
         setError("Invalid username or password");
         console.log(response.status);
