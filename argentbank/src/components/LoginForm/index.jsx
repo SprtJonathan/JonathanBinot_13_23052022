@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { Navigate } from "react-router";
 
 const LOGIN_URL = "http://localhost:3001/api/v1/user/login";
 
@@ -21,7 +22,7 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, password);
+    //console.log(username, password);
     setPassword("");
     setSuccess(true);
     const userCredentials = {
@@ -45,8 +46,10 @@ function LoginForm() {
 
       if (response.status === 200) {
         setSuccess("You have successfully logged in");
-        const token = await response.json();
-        console.log(token);
+        const res = await response.json();
+        console.log(res);
+        const token = res.body.token;
+        localStorage.setItem("token", token);
       } else {
         setError("Invalid username or password");
         console.log(response.status);
@@ -60,9 +63,7 @@ function LoginForm() {
   return (
     <>
       {success ? (
-        <section>
-          <h1>Connecté</h1>
-        </section>
+        <Navigate to="/user" />
       ) : (
         <form onSubmit={handleSubmit}>
           <div>
