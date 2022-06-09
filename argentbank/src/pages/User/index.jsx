@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router";
+import { useSelector } from "react-redux";
 import "./index.css";
 
 const PROFILE_URL = "http://localhost:3001/api/v1/user/profile";
 
 function UserPage() {
+  const userStatus = useSelector((state) => state.userStatus.value);
+  const token = userStatus.token;
+  console.log(userStatus);
+
   let [userData, setUserData] = useState("");
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
@@ -31,8 +35,6 @@ function UserPage() {
       }
     } else return "No Token";
   };
-
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchData(token);
@@ -61,6 +63,7 @@ function UserPage() {
       if (response.status === 200) {
         const res = await response.json();
         setUserData(res.body);
+        changeEditModeState();
       } else {
         console.log(response.status);
       }
@@ -72,7 +75,7 @@ function UserPage() {
   return (
     <main className="main bg-dark">
       {editModeOn ? (
-        <form className="header">
+        <form className="header" onSubmit={handleSubmit}>
           <h1>
             Welcome back
             <br />
@@ -96,12 +99,10 @@ function UserPage() {
             ></input>
           </h1>
           <div>
-            <button className="edit-button" onSubmit={handleSubmit}>
-              Save
-            </button>
-            <button className="edit-button" onClick={changeEditModeState}>
+            <button className="edit-button">Save</button>
+            <div className="edit-button" onClick={changeEditModeState}>
               Cancel
-            </button>
+            </div>
           </div>
         </form>
       ) : (

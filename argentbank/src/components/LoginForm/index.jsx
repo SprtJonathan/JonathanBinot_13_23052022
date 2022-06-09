@@ -1,9 +1,13 @@
 import { useRef, useState, useEffect } from "react";
 import { Navigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setJwtToken } from "../../redux/reducers/AuthReducer.js";
 
 const LOGIN_URL = "http://localhost:3001/api/v1/user/login";
 
 function LoginForm() {
+  const dispatch = useDispatch();
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -47,9 +51,9 @@ function LoginForm() {
       if (response.status === 200) {
         setSuccess("You have successfully logged in");
         const res = await response.json();
-        console.log(res);
+        //console.log(res);
         const token = res.body.token;
-        localStorage.setItem("token", token);
+        dispatch(setJwtToken({ token: token, isAuthenticated: true }));
       } else {
         setError("Invalid username or password");
         console.log(response.status);

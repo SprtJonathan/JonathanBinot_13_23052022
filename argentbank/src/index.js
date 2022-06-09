@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import store from "./redux/store";
+//import store from "./redux/store";
+import { configureStore } from "@reduxjs/toolkit";
 
 import "./index.css";
 
@@ -14,6 +15,14 @@ import Homepage from "./pages/Homepage";
 import Signin from "./pages/Signin";
 import User from "./pages/User";
 import reportWebVitals from "./reportWebVitals";
+
+import authReducer from "./redux/reducers/AuthReducer";
+
+const store = configureStore({
+  reducer: {
+    userStatus: authReducer,
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
