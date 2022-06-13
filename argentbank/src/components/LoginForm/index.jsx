@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Navigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { setJwtToken } from "../../redux/reducers/AuthReducer.js";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/reducers/loggedUser.js";
 
 const LOGIN_URL = "http://localhost:3001/api/v1/user/login";
 
@@ -13,12 +13,11 @@ function LoginForm() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
+  const [success, setSuccess] = useState(
+    useSelector((state) => state.userStatus.value.isAuthenticated)
+  );
 
   useEffect(() => {
     setError("");
@@ -28,7 +27,6 @@ function LoginForm() {
     e.preventDefault();
     //console.log(username, password);
     setPassword("");
-    setSuccess(true);
     const userCredentials = {
       email: username,
       password: password,
@@ -49,11 +47,20 @@ function LoginForm() {
       });
 
       if (response.status === 200) {
-        setSuccess("You have successfully logged in");
         const res = await response.json();
         //console.log(res);
         const token = res.body.token;
-        dispatch(setJwtToken({ token: token, isAuthenticated: true }));
+        dispatch(login({ token: token, isAuthenticated: true }));
+        setSuccess(true);
+        if (rememberMe) {
+          localStorage.setItem(
+            "token",
+            JSON.stringify({
+              token: token,
+              isAuthenticated: true,
+            })
+          );
+        }
       } else {
         setError("Invalid username or password");
         console.log(response.status);
@@ -103,7 +110,11 @@ function LoginForm() {
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input
+              type="checkbox"
+              id="remember-me"
+              onChange={(e) => setRememberMe(!rememberMe)}
+            />
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <button className="sign-in-button">Sign In</button>

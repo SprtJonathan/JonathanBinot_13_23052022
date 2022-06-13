@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import "./index.css";
 
 const PROFILE_URL = "http://localhost:3001/api/v1/user/profile";
@@ -7,7 +8,7 @@ const PROFILE_URL = "http://localhost:3001/api/v1/user/profile";
 function UserPage() {
   const userStatus = useSelector((state) => state.userStatus.value);
   const token = userStatus.token;
-  console.log(userStatus);
+  //console.log(userStatus);
 
   let [userData, setUserData] = useState("");
   let [firstName, setFirstName] = useState("");
@@ -50,7 +51,7 @@ function UserPage() {
       firstName: firstName,
       lastName: lastName,
     };
-    console.log(newUserData);
+    //console.log(newUserData);
     try {
       const response = await fetch(PROFILE_URL, {
         method: "PUT",
@@ -73,82 +74,99 @@ function UserPage() {
   };
 
   return (
-    <main className="main bg-dark">
-      {editModeOn ? (
-        <form className="header" onSubmit={handleSubmit}>
-          <h1>
-            Welcome back
-            <br />
-            <input
-              placeholder={userData.firstName}
-              type="text"
-              id="firstname"
-              autoComplete="off"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              required
-            ></input>
-            <input
-              placeholder={userData.lastName}
-              type="text"
-              id="lastname"
-              autoComplete="off"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              required
-            ></input>
-          </h1>
-          <div>
-            <button className="edit-button">Save</button>
-            <div className="edit-button" onClick={changeEditModeState}>
-              Cancel
+    <>
+      {token ? (
+        <main className="main bg-dark">
+          {editModeOn ? (
+            <form className="header" onSubmit={handleSubmit}>
+              <h1>
+                Welcome back
+                <br />
+                <div className="edit-profile-input-block">
+                  <input
+                    placeholder={userData.firstName}
+                    type="text"
+                    id="firstname"
+                    className="edit-profile-input"
+                    autoComplete="off"
+                    onChange={(e) => setFirstName(e.target.value)}
+                    value={firstName}
+                    required
+                  ></input>
+                  <input
+                    placeholder={userData.lastName}
+                    type="text"
+                    id="lastname"
+                    className="edit-profile-input"
+                    autoComplete="off"
+                    onChange={(e) => setLastName(e.target.value)}
+                    value={lastName}
+                    required
+                  ></input>
+                </div>
+                <div className="edit-profile-buttons-block">
+                  <input
+                    type="submit"
+                    className="edit-profile-buttons"
+                    value="Save"
+                  />
+                  <input
+                    type="button"
+                    className="edit-profile-buttons"
+                    onClick={changeEditModeState}
+                    value="Cancel"
+                  />
+                </div>
+              </h1>
+            </form>
+          ) : (
+            <div className="header">
+              <h1>
+                Welcome back
+                <br />
+                {userData.firstName} {userData.lastName}!
+              </h1>
+              <button className="edit-button" onClick={changeEditModeState}>
+                Edit Name
+              </button>
             </div>
-          </div>
-        </form>
+          )}
+          <h2 className="sr-only">Accounts</h2>
+          <section className="account">
+            <div className="account-content-wrapper">
+              <h3 className="account-title">Argent Bank Checking (x8349)</h3>
+              <p className="account-amount">$2,082.79</p>
+              <p className="account-amount-description">Available Balance</p>
+            </div>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+          </section>
+          <section className="account">
+            <div className="account-content-wrapper">
+              <h3 className="account-title">Argent Bank Savings (x6712)</h3>
+              <p className="account-amount">$10,928.42</p>
+              <p className="account-amount-description">Available Balance</p>
+            </div>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+          </section>
+          <section className="account">
+            <div className="account-content-wrapper">
+              <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
+              <p className="account-amount">$184.30</p>
+              <p className="account-amount-description">Current Balance</p>
+            </div>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+          </section>
+        </main>
       ) : (
-        <div className="header">
-          <h1>
-            Welcome back
-            <br />
-            {userData.firstName} {userData.lastName}!
-          </h1>
-          <button className="edit-button" onClick={changeEditModeState}>
-            Edit Name
-          </button>
-        </div>
+        <Navigate to="/sign-in" />
       )}
-      <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-    </main>
+    </>
   );
 }
 

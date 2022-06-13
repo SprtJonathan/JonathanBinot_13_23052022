@@ -42,6 +42,40 @@
   font-weight: bold;
   padding: 10px;
 }
+.edit-profile-input-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+}
+.edit-profile-input {
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  width: 40%;
+}
+
+.edit-profile-buttons-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+}
+
+.edit-profile-buttons {
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0px 10px;
+  width: 130px;
+}
+
+.edit-profile-buttons:hover {
+  cursor: pointer;
+}
 
 .header {
   color: #fff;
@@ -70,6 +104,9 @@
   }
 
   .transaction-button {
+    width: 200px;
+  }
+  .edit-profile-input {
     width: 200px;
   }
 }

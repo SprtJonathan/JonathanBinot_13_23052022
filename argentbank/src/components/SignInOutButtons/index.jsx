@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/reducers/loggedUser.js";
 
 function SignInOutButtons() {
+  const dispatch = useDispatch();
   const userStatus = useSelector((state) => state.userStatus.value);
 
   return (
@@ -17,7 +19,14 @@ function SignInOutButtons() {
             <i className="fa fa-user-circle"></i>
             Profile
           </Link>
-          <Link className="main-nav-item" to="/">
+          <Link
+            className="main-nav-item"
+            onClick={() => {
+              dispatch(logout());
+              localStorage.removeItem("token");
+            }}
+            to="/"
+          >
             <i className="fa fa-user-circle"></i>
             Logout
           </Link>

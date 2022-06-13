@@ -14,13 +14,14 @@ import Footer from "./components/Footer";
 import Homepage from "./pages/Homepage";
 import Signin from "./pages/Signin";
 import User from "./pages/User";
+
 import reportWebVitals from "./reportWebVitals";
 
-import authReducer from "./redux/reducers/AuthReducer";
+import loggedUser from "./redux/reducers/loggedUser";
 
 const store = configureStore({
   reducer: {
-    userStatus: authReducer,
+    userStatus: loggedUser,
   },
 });
 
