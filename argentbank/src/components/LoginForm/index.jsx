@@ -3,6 +3,7 @@ import { Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/reducers/loggedUser.js";
 
+
 const LOGIN_URL = "http://localhost:3001/api/v1/user/login";
 
 function LoginForm() {
@@ -74,7 +75,7 @@ function LoginForm() {
   return (
     <>
       {success ? (
-        <Navigate to="/user" />
+        <Navigate to="/profile" />
       ) : (
         <form onSubmit={handleSubmit}>
           <div>

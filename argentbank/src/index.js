@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import { Provider } from "react-redux";
 //import store from "./redux/store";
@@ -12,8 +17,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import Homepage from "./pages/Homepage";
-import Signin from "./pages/Signin";
-import User from "./pages/User";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -33,8 +38,12 @@ root.render(
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/sign-in" element={<Signin />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route
+                    path="/*"
+                    element={ <Navigate to="/" /> }
+                />
         </Routes>
         <Footer />
       </Router>

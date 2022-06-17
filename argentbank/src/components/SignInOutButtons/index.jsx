@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/reducers/loggedUser.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 function SignInOutButtons() {
   const dispatch = useDispatch();
@@ -9,14 +11,14 @@ function SignInOutButtons() {
   return (
     <>
       {userStatus.isAuthenticated === false ? (
-        <Link className="main-nav-item" to="/sign-in">
-          <i className="fa fa-user-circle"></i>
+        <Link className="main-nav-item" to="/login">
+          <FontAwesomeIcon icon={faUserCircle} />
           Sign In
         </Link>
       ) : (
         <div>
-          <Link className="main-nav-item" to="/user">
-            <i className="fa fa-user-circle"></i>
+          <Link className="main-nav-item" to="/profile">
+            <FontAwesomeIcon icon={faUserCircle} />
             Profile
           </Link>
           <Link

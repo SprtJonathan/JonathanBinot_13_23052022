@@ -164,7 +164,7 @@ function UserPage() {
           </section>
         </main>
       ) : (
-        <Navigate to="/sign-in" />
+        <Navigate to="/login" />
       )}
     </>
   );

@@ -36,8 +36,7 @@ const userSlice = createSlice({
       state.value = action.payload;
     },
     logout: (state) => {
-      state.value = userStateValue;
-      userStateValue = defaultUserValue;
+      state.value = defaultUserValue;
     },
   },
 });
