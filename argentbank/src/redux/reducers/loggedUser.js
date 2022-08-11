@@ -1,17 +1,3 @@
-// const authState = {
-//   isAuthenticated: false,
-//   body: {
-//     token:
-//       "",
-//   },
-// };
-
-// const authReducer = (state, action) => {
-//   return state;
-// };
-
-// export default authReducer;
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultUserValue = { token: "", isAuthenticated: false };

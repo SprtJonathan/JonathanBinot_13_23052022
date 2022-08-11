@@ -8,8 +8,6 @@ import {
 } from "react-router-dom";
 
 import { Provider } from "react-redux";
-//import store from "./redux/store";
-import { configureStore } from "@reduxjs/toolkit";
 
 import "./index.css";
 
@@ -22,13 +20,7 @@ import Profile from "./pages/Profile";
 
 import reportWebVitals from "./reportWebVitals";
 
-import loggedUser from "./redux/reducers/loggedUser";
-
-const store = configureStore({
-  reducer: {
-    userStatus: loggedUser,
-  },
-});
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -40,10 +32,7 @@ root.render(
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
-          <Route
-                    path="/*"
-                    element={ <Navigate to="/" /> }
-                />
+          <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />
       </Router>

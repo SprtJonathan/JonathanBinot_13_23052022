@@ -83,6 +83,12 @@ paths:
             name: Transaction ID
             description: Attach transaction ID
             required: true
+          - in: body
+            name: body
+            description: Update user profile attributes
+            required: true
+            schema:
+              $ref: '#/definitions/EditedTransaction'
         produces:
           - application/json
         responses:
@@ -94,7 +100,6 @@ paths:
             description: Invalid Fields
           '500':
             description: Internal Server Error
-            
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -102,19 +107,32 @@ securityDefinitions:
     in: header
 definitions:
   TransactionsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: number
+        date:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+        balance:
+          type: number
+  TransactionResponse:
     type: object
     properties:
       id:
         type: number
-      date:
+      Transaction Type:
         type: string
-      description:
+      Category:
         type: string
-      amount:
-        type: number
-      balance:
-        type: number
-  TransactionResponse:
+      Notes:
+        type: string
+  EditedTransaction:
     type: object
     properties:
       id:
