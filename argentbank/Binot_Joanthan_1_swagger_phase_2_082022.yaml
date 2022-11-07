@@ -9,22 +9,28 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /account/:accountId/transactions:
+  /account/:accountId/transactions/: 
     get:
-      security:
-        - Bearer: []
-      tags:
+      security: 
+        - Bearer: [] 
+      tags: 
         - Transactions Module
-      summary: Transactions
-      description: Retrieve every transactions and their infos
+      summary: Transactions  
+      description: Get details of all transactions that happened in a specific month
       parameters:
-        - in: header
+        - in: header 
           type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+        - in: body
+          name: body
+          description: Provide date (month and year) of wanted transactions
+          required: false
+          schema:
+              $ref: '#/definitions/TransactionsFilter'
       produces:
-        - application/json
+        - application/json 
       responses:
         '200':
           description: Transactions successfully retrieved
@@ -35,7 +41,7 @@ paths:
         '500':
           description: Internal Server Error
           
-  /account/:accountId/transaction:
+  /account/:accountId/transaction/:
     get:
       security:
         - Bearer: []
@@ -106,6 +112,13 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
+  TransactionsFilter:
+    type: object
+    properties:
+      month:
+        type: number
+      year:
+        type: number
   TransactionsResponse:
     type: array
     items:
