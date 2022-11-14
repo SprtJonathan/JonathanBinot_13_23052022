@@ -50,7 +50,8 @@ function SignInOutButtons() {
       ) : (
         <div>
           <Link className="main-nav-item" to="/profile">
-            {userData !== "" ? (
+            {userData.firstName !== undefined &&
+            userData.lastName !== undefined ? (
               <div>
                 <FontAwesomeIcon icon={faUserCircle} />
                 {userData.firstName} {userData.lastName.charAt(0)}.
