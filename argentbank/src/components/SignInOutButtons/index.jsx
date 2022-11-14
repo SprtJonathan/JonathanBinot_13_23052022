@@ -50,10 +50,17 @@ function SignInOutButtons() {
       ) : (
         <div>
           <Link className="main-nav-item" to="/profile">
-            <span>
-              <FontAwesomeIcon icon={faUserCircle} />
-              {userData.firstName} {userData.lastName.charAt(0)}.{" "}
-            </span>
+            {userData !== "" ? (
+              <div>
+                <FontAwesomeIcon icon={faUserCircle} />
+                {userData.firstName} {userData.lastName.charAt(0)}.
+              </div>
+            ) : (
+              <div>
+                <FontAwesomeIcon icon={faUserCircle} />
+                Profile
+              </div>
+            )}
           </Link>
           <Link
             className="main-nav-item"
