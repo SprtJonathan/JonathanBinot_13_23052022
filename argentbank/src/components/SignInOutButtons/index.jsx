@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/reducers/loggedUser.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretSquareDown,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import "./index.css";
 
 const PROFILE_URL = "http://localhost:3001/api/v1/user/profile";
 
@@ -48,19 +52,19 @@ function SignInOutButtons() {
           Sign In
         </Link>
       ) : (
-        <div>
+        <div className="menu-buttons">
           <Link className="main-nav-item" to="/profile">
             {userData.firstName !== undefined &&
             userData.lastName !== undefined ? (
-              <div>
+              <span>
                 <FontAwesomeIcon icon={faUserCircle} />
                 {userData.firstName} {userData.lastName.charAt(0)}.
-              </div>
+              </span>
             ) : (
-              <div>
+              <span>
                 <FontAwesomeIcon icon={faUserCircle} />
                 Profile
-              </div>
+              </span>
             )}
           </Link>
           <Link
