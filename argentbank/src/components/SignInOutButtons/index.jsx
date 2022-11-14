@@ -1,12 +1,44 @@
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/reducers/loggedUser.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
+const PROFILE_URL = "http://localhost:3001/api/v1/user/profile";
+
 function SignInOutButtons() {
   const dispatch = useDispatch();
   const userStatus = useSelector((state) => state.userStatus.value);
+  const token = userStatus.token;
+
+  let [userData, setUserData] = useState("");
+
+  const fetchData = async (token) => {
+    if (token) {
+      try {
+        const response = await fetch(PROFILE_URL, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: "Bearer" + token,
+          },
+        });
+        if (response.status === 200) {
+          const res = await response.json();
+          setUserData(res.body);
+        } else {
+          console.log(response.status);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else return "No Token";
+  };
+
+  useEffect(() => {
+    fetchData(token);
+  }, [setUserData, token]);
 
   return (
     <>
@@ -18,8 +50,10 @@ function SignInOutButtons() {
       ) : (
         <div>
           <Link className="main-nav-item" to="/profile">
-            <FontAwesomeIcon icon={faUserCircle} />
-            Profile
+            <span>
+              <FontAwesomeIcon icon={faUserCircle} />
+              {userData.firstName} {userData.lastName.charAt(0)}.{" "}
+            </span>
           </Link>
           <Link
             className="main-nav-item"
